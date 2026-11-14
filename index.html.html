@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>غرفة عمل الورشة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --surface2:#e8ecf2; --ink:#142033; --muted:#566277; --line:#d3dae4;
+  --brand:#0d5c8f; --brand-ink:#ffffff; --signal:#b45f06; --good:#1c7c4d; --warn:#b3261e;
+  --r1:#0d5c8f; --r2:#7a4fb0; --r3:#1c7c4d; --r4:#a35a06; --r5:#b13a64; --r6:#4a6275;
+  --f-body:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,system-ui,sans-serif;
+  --f-head:"Readex Pro","IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1520; --surface:#162132; --surface2:#1e2c42; --ink:#e8eef6; --muted:#9aa8bb; --line:#2b3b52;
+  --brand:#6bb6ea; --brand-ink:#08121d; --signal:#f0a54a; --good:#5ccf94; --warn:#ff8d85;
+  --r1:#6bb6ea; --r2:#b99af0; --r3:#5ccf94; --r4:#f0a54a; --r5:#f08ab0; --r6:#9db4c6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1520; --surface:#162132; --surface2:#1e2c42; --ink:#e8eef6; --muted:#9aa8bb; --line:#2b3b52;
+  --brand:#6bb6ea; --brand-ink:#08121d; --signal:#f0a54a; --good:#5ccf94; --warn:#ff8d85;
+  --r1:#6bb6ea; --r2:#b99af0; --r3:#5ccf94; --r4:#f0a54a; --r5:#f08ab0; --r6:#9db4c6; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
+h1{font-size:1.7rem} h2{font-size:1.3rem} h3{font-size:1.05rem}
+p{margin:0 0 .6em} a{color:var(--brand)}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:6px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;padding:28px 0 18px}
+.eyebrow{font-size:.8rem;letter-spacing:.04em;color:var(--muted);margin:0 0 6px}
+.sub{color:var(--muted);margin:6px 0 0;font-size:.95rem}
+.deadline{display:flex;align-items:baseline;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+.deadline b{font-family:var(--f-head);font-size:1.6rem;color:var(--signal);font-variant-numeric:tabular-nums}
+.deadline span{font-size:.85rem;color:var(--muted)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);padding:6px 0 0;margin-bottom:20px}
+nav.tabs a{padding:10px 16px;text-decoration:none;color:var(--muted);font-weight:500;white-space:nowrap;border-bottom:3px solid transparent}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--brand)}
+.badge{display:inline-block;min-width:20px;text-align:center;border-radius:99px;background:var(--warn);color:#fff;font-size:.75rem;padding:0 6px;margin-inline-start:6px}
+.who{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin-bottom:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+.panel>h2,.panel>h3{margin-bottom:10px}
+.cols{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:860px){.cols{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+.grid3{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;padding:2px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface2);color:var(--ink)}
+.chip.warn{border-color:var(--warn);color:var(--warn)} .chip.good{border-color:var(--good);color:var(--good)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--muted));display:inline-block}
+.tag-shared,.tag-indiv{font-size:.75rem;padding:1px 8px;border-radius:99px;font-weight:500}
+.tag-shared{background:var(--surface2);color:var(--brand)} .tag-indiv{background:var(--surface2);color:var(--signal)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.93rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:start;vertical-align:top}
+th{font-family:var(--f-head);font-weight:500;color:var(--muted);font-size:.82rem}
+ul.plain{margin:0;padding-inline-start:20px} ul.plain li{margin-bottom:6px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:600;font-size:.9rem}
+.btn{font:inherit;font-weight:500;cursor:pointer;border-radius:8px;border:1px solid var(--brand);background:var(--brand);color:var(--brand-ink);padding:8px 18px;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--brand)} .btn.danger{border-color:var(--warn);color:var(--warn);background:transparent}
+.btn.sel{background:var(--brand);color:var(--brand-ink)} .btn.small{padding:4px 12px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.role-card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--surface);display:flex;flex-direction:column;gap:8px;min-width:0}
+.role-card h3{display:flex;gap:8px;align-items:center}
+.role-card .en{color:var(--muted);font-size:.85rem}
+.bar{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--c,var(--brand));border-radius:99px}
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.task:last-child{border-bottom:0}
+.task input{width:20px;height:20px;margin-top:5px;accent-color:var(--brand);flex:none}
+.task.done label,.task.done .tx{color:var(--muted);text-decoration:line-through}
+.task label,.task .tx{flex:1;cursor:pointer;min-width:0} .task .tx{cursor:default}
+.task .when{flex:none;font-size:.75rem;color:var(--muted);white-space:nowrap}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font-weight:500;font-size:.92rem}
+input[type=text],input[type=url],input[type=date],textarea{font:inherit;width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:9px 12px}
+textarea{min-height:110px;resize:vertical}
+.hint{font-size:.82rem;color:var(--muted);margin:0}
+.msg{padding:8px 12px;border-radius:8px;font-size:.9rem;margin:8px 0;background:var(--surface2)}
+.msg.err{color:var(--warn)} .msg.ok{color:var(--good)}
+.banner{border:1px dashed var(--line);border-radius:12px;padding:16px;background:var(--surface);margin-bottom:16px}
+.stars{display:flex;gap:2px;direction:ltr;justify-content:flex-end;width:max-content}
+.stars button{background:none;border:0;font-size:1.8rem;line-height:1;color:var(--line);cursor:pointer;padding:2px 4px}
+.stars button.on{color:var(--signal)} .stars.ro button{cursor:default;font-size:1.1rem;padding:0 1px}
+.fb{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
+.fb.warn{border-color:var(--warn)}
+.fb p{margin:6px 0 0;white-space:pre-wrap}
+.rtext{white-space:pre-wrap;max-height:320px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;font-size:.92rem;margin-top:8px}
+details{margin-bottom:6px} details summary{cursor:pointer;font-weight:500}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.tl{display:grid;gap:0}
+.tl>div{display:grid;grid-template-columns:170px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.tl>div:last-child{border-bottom:0} .tl b{font-weight:500;color:var(--brand)}
+@media(max-width:560px){.tl>div{grid-template-columns:1fr;gap:0}}
+@media(prefers-reduced-motion:no-preference){.bar>i{transition:width .3s}}
+</style>
+
+</head>
+<body>
+<div id="app" dir="rtl" lang="ar"><div class="wrap"><p class="muted" style="padding-top:40px">جارٍ التحميل…</p></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+'use strict';
+document.documentElement.setAttribute('dir','rtl');
+document.documentElement.setAttribute('lang','ar');
+var $app=document.getElementById('app');
+/* ===== الإعدادات المدمجة لمشروعك والإيميل ===== */
+var FIREBASE_CONFIG={
+  apiKey:'AIzaSyBtVzSTrkInuW1cMympYm3aWtb5OuHXOTk',
+  authDomain:'esgshh-9de13.firebaseapp.com',
+  projectId:'esgshh-9de13',
+  storageBucket:'esgshh-9de13.firebasestorage.app',
+  messagingSenderId:'235110349461',
+  appId:'1:235110349461:web:d0cc53ce71144baaf5b99c'
+};
+var LEADER_EMAIL='jmxron@gmail.com';
+/* ================================================================= */
+var DEFAULT_DEADLINE='2026-11-18';
+
+/* ---------- محتوى الأدوار ---------- */
+var ROLES=[
+{id:'leader',ar:'قائد الفريق',en:'Team Leader',c:'--r1',ownerOnly:true,
+ sum:'ينسّق الفريق، يوزّع المهام، ويتابع الجميع ويوثّق متابعته بصدق ليصل الفريق إلى التسليم ناجحاً',
+ slots:[['ch','ميثاق الفريق Team Charter'],['pl','خطة المشروع والمعالم'],['vd','فيديو الورشة الجماعي (رابط يراه الجميع)']],
+ tasks:[
+  ['l1','اعقد الاجتماع الأول: وزّع الأدوار الستة وأنشئ مجموعة تواصل للفريق','المرحلة 1'],
+  ['l2','اكتبوا معاً قواعد العمل Team Charter: مواعيد الاجتماعات، طريقة اتخاذ القرار، وكيف تُحل الخلافات','المرحلة 1'],
+  ['l3','راجع أجوبة الدكتورة في تبويب نظرة عامة وتأكد أن الجميع فهمها: التقديم جماعي ويُصوَّر، والجدول والمحاضر داخل المتن','المرحلة 1'],
+  ['l4','قسّم المحاور الأربعة على الأعضاء بحيث يقدّم كل عضو جزءاً من الورشة','المرحلة 1'],
+  ['l5','ضع المعالم الزمنية Milestones مع الأعضاء وراجعها كل يوم','المرحلة 1'],
+  ['l6','اعقد اجتماعاً يومياً قصيراً (15 دقيقة) واطلب من كل عضو تحديث حالته','يومياً'],
+  ['l7','سجّل كل مشكلة تظهر وكيف حُلّت في سجل المشاكل Problem Log مع مسؤول التوثيق، فالنشاط 2 يحتاجها','طوال المشروع'],
+  ['l8','تابع الأعضاء من لوحة القائد: أضف تقييماً أو تنبيهاً أو إشادة في قسم كل عضو، وتأكد أنه اطّلع عليها','طوال المشروع'],
+  ['l9','قبل التسليم: تأكد أن كل عضو رفع مخرجات دوره وكتب تقريره وأن التنسيق والمراجع سليمة','المرحلة 5'],
+  ['l10','نسّق تصوير الورشة الجماعية: من يصوّر وأين، ثم شارك الفيديو مع الجميع ليرفقه كل عضو مع ملفه','المرحلة 4']],
+ tips:['لا تقرر وحدك: اسمع الجميع واطلب رأي كل عضو قبل القرار النهائي','التنبيه المبكر أفضل من اللوم المتأخر: إذا تأخر عضو، قل له بلطف وبوضوح واكتب ذلك في سجل المتابعة','وثّق كل قرار مهم، فهو دليلك في تحليل ديناميكيات الفريق','اعترف بأخطائك أمام الفريق، فالتقييم الذاتي الصادق يرفع درجتك في D3'],
+ rep:'النشاط 3 (P5, P6, M4, D3): أهمية ديناميكيات الفريق، أسلوب قيادتك وأثره، وتقييم نقدي صادق لدورك مع نقاط القوة والتحسين. ابحث عن نموذج Tuckman لمراحل تكوّن الفريق ونموذج Belbin لأدوار الفريق واربطهما بتجربتكم'},
+{id:'scheduler',ar:'مسؤول الجدول الزمني',en:'Scheduler / Time Manager',c:'--r2',
+ sum:'يصمّم جدول يوم الورشة وخطة التحضير، ويبرّر وقت كل فقرة ويجهّز خطط الطوارئ',
+ slots:[['sch','جدول يوم الورشة النهائي مع التبرير (ينسخه الجميع إلى تقاريرهم)'],['cp','خطط الطوارئ Contingency Plans'],['gt','مخطط Gantt للتحضير']],
+ tasks:[
+  ['s1','صمّم جدول يوم الورشة الكامل: تسجيل وافتتاح، المحاور الأربعة، أنشطة تفاعلية، استراحات، غداء، ختام وتقييم','المرحلة 2'],
+  ['s2','اكتب لكل فقرة مدتها مع تبرير الوقت، مثلاً لماذا لا تتجاوز المحاضرة 25 دقيقة','المرحلة 2'],
+  ['s3','أضف وقتاً احتياطياً Buffer بين الفقرات (5 إلى 10 دقائق)','المرحلة 2'],
+  ['s4','اكتب خطط الطوارئ: تعطل جهاز العرض أو الإنترنت، غياب متحدث، تأخر الجمهور، تجاوز الوقت','المرحلة 3'],
+  ['s5','أنشئ مخطط Gantt لمرحلة التحضير من اليوم حتى التسليم','المرحلة 2'],
+  ['s6','اعرض الجدول على الفريق، عدّله حسب الملاحظات، ثم اعتمده','المرحلة 3'],
+  ['s7','يوم الورشة: كن مراقب الوقت Timekeeper ونبّه المتحدثين قبل انتهاء وقتهم','المرحلة 4']],
+ tips:['اجعل أقصر فقرة للمحاضرة وأطول وقت للنشاط التفاعلي، فانتباه الجمهور يقل مع الوقت','اربط كل تبرير بسبب واضح: انتباه الجمهور، طاقة الفريق، أو وقت التنقل','خطة الطوارئ الجيدة لها: الخطر، احتماله، وماذا نفعل بالتحديد وبمن','اكتب في تقريرك كيف أدرت وقتك أنت شخصياً أثناء التخطيط، وليس الفريق فقط','ضع الجدول النهائي هنا كنص أو جدول ليأخذه كل عضو إلى متن تقريره، فالدكتورة اشترطت أن يكون عنصراً أساسياً وليس ملحقاً'],
+ rep:'النشاط 1 (P2, M1): تقديم الجدول المهني مع تبرير الأوقات وخطط الطوارئ، وشرح تفصيلي لكيفية تطبيقك مهارات إدارة الوقت أثناء التخطيط'},
+{id:'researcher',ar:'مسؤول البحث والمحتوى',en:'Research & Content Lead',c:'--r3',
+ sum:'يجمع المصادر ودراسات الحالة ويحوّلها إلى محتوى مبسّط، ويبحث في تقنيات حل المشكلات',
+ slots:[['src','المصادر الموثوقة التي جمعتها (روابط)'],['cs','دراسات الحالة وملخصات المحاور'],['ps','بحث تقنيات حل المشكلات']],
+ tasks:[
+  ['r1','اجمع مصادر موثوقة لكل محور من المحاور الأربعة وسلّمها أولاً بأول لمسؤول التوثيق ليولّد مراجعها بنظام Harvard','المرحلة 2'],
+  ['r2','اختر دراسات حالة Case Studies واقعية: تصيّد Phishing، تسريب بيانات، برامج الفدية Ransomware','المرحلة 2'],
+  ['r3','لخّص كل محور بلغة بسيطة تناسب طلاب السنة الأخيرة','المرحلة 3'],
+  ['r4','ابحث في تقنيات حل المشكلات الشائعة في إدارة الفعاليات: Six-Step Model, 5 Whys, Fishbone, SWOT, PDCA','المرحلة 3'],
+  ['r5','شارك قائمة المصادر مع مسؤول التوثيق كل يوم','يومياً'],
+  ['r6','راجع صحة معلومات شرائح الزملاء قبل البروفة','المرحلة 3']],
+ tips:['استخدم مصادر حديثة ورسمية، وتجنب المنتديات والمدونات المجهولة','دراسة الحالة الأقوى هي التي يستطيع الطالب أن يرى نفسه فيها','اكتب لكل تقنية حل مشكلات: ما هي، متى تُستخدم، مثال على فعالية','لا تنسخ الفقرات، أعد الصياغة بأسلوبك وضع الاقتباس والمصدر'],
+ rep:'النشاط 2 (P3, M2, M3): بحث في تقنيات حل المشكلات، اختيار تقنيات محددة، وتبرير اختيارها مع أمثلة تطبيق على مشاكل واجهت الفعالية'},
+{id:'designer',ar:'مسؤول التصميم والعرض',en:'Design & Presentation Lead',c:'--r4',
+ sum:'يبني ملف العرض التقديمي الموحّد والمواد البصرية، ويضمن وضوحها من آخر القاعة',
+ slots:[['pp','ملف العرض التقديمي المشترك'],['vm','المواد البصرية: ملصق وإنفوغرافيك']],
+ tasks:[
+  ['d1','اتفق مع الفريق على هوية بصرية موحدة: ألوان، خطوط، وقالب شرائح','المرحلة 2'],
+  ['d2','ابنِ ملف العرض التقديمي المشترك ودمج شرائح الأعضاء فيه','المرحلة 3'],
+  ['d3','صمّم مواد بصرية: ملصق الورشة، إنفوغرافيك لكل محور، وشريحة الجدول','المرحلة 3'],
+  ['d4','اجعل الشرائح خفيفة النص: فكرة واحدة في الشريحة وخط كبير ومتباين','المرحلة 3'],
+  ['d5','وثّق مصادر الصور والأيقونات وتأكد من حقوق استخدامها','المرحلة 4'],
+  ['d6','جهّز نسخة احتياطية PDF على فلاش وعلى السحابة قبل الورشة','المرحلة 4']],
+ tips:['اختبر الشرائح على شاشة كبيرة، فما يظهر جيداً على اللابتوب قد يضيع في القاعة','استخدم الرسوم والمخططات بدل الفقرات الطويلة','الألوان والخطوط الموحّدة تعطي انطباعاً احترافياً للفريق كله','في تقريرك اشرح لماذا اخترت كل أسلوب بصري وكيف يخدم الجمهور'],
+ rep:'النشاط 1 (P1, D1): تنويع أساليب التواصل (بصري، مكتوب، لفظي) وتقييم فاعليتها في تصميم الفعالية وتقديمها'},
+{id:'engagement',ar:'مسؤول التفاعل والتقديم',en:'Engagement & Delivery Lead',c:'--r5',
+ sum:'يصمّم الأنشطة التفاعلية، يدرّب الفريق على التقديم، ويجمع تقييم الجمهور',
+ slots:[['ac','دليل الأنشطة التفاعلية Facilitator Guide'],['fb','نموذج تقييم الجمهور Feedback Form']],
+ tasks:[
+  ['e1','صمّم نشاطاً تفاعلياً لكل محور: تصويت مباشر، اختبار قصير، أو سيناريو: هل هذه رسالة تصيّد؟','المرحلة 3'],
+  ['e2','جهّز دليل المُيسّر: أسئلة النقاش وأجوبة نموذجية','المرحلة 3'],
+  ['e3','نظّم بروفة واحدة على الأقل مع تقييم متبادل بين المتحدثين','المرحلة 3'],
+  ['e4','أعدّ نموذج تقييم الجمهور وخطة لجمعه بعد الورشة','المرحلة 3'],
+  ['e5','يوم الورشة: أدر النقاشات والأسئلة Q&A وراقب تفاعل الجمهور','المرحلة 4'],
+  ['e6','حلّل نتائج التقييم وشاركها مع الفريق ومسؤول التوثيق','المرحلة 4']],
+ tips:['نوّع بين الأسلوب اللفظي والبصري والعملي حتى لا يمل الجمهور','تدرّب على الاستماع النشط Active Listening وعلى لغة الجسد','الأسئلة المفتوحة تحرك النقاش أكثر من الأسئلة التي جوابها نعم أو لا','نتائج التقييم أدلتك لإثبات أن أساليب التواصل كانت فعالة'],
+ rep:'النشاط 1 (P1, D1): تقييم فاعلية مهارات التواصل بين الأشخاص أثناء التصميم والتقديم، مع أدلة من تقييم الجمهور وبروفة الفريق'},
+{id:'secretary',ar:'مسؤول التوثيق',en:'Secretary / Documentation Lead',c:'--r6',
+ tool:['https://www.citethisforme.com/','موقع CiteThisForMe لتوليد المراجع بنظام Harvard'],
+ sum:'يدوّن محاضر الاجتماعات ويجمع الأدلة والملاحق التي يعتمد عليها تقييم عمل الفريق',
+ slots:[['rf','قائمة المراجع بنظام Harvard (من CiteThisForMe)'],['mn','محاضر الاجتماعات (ينسخها الجميع إلى تقاريرهم)'],['ev','سجل الأدلة Evidence'],['pb','سجل المشاكل والحلول Problem Log']],
+ tasks:[
+  ['c1','دوّن محضر كل اجتماع: التاريخ، الحضور، القرارات، المهام والمواعيد','كل اجتماع'],
+  ['c2','احتفظ بسجل المهام Task Log: من فعل ماذا ومتى','طوال المشروع'],
+  ['c3','اجمع الأدلة Evidence: لقطات محادثات، صور الورشة، نماذج التقييم، الملاحظات','طوال المشروع'],
+  ['c4','حدّث سجل المشاكل والحلول مع القائد','طوال المشروع'],
+  ['c5','سلّم الجميع نسخة نظيفة من المحاضر ليضعوها داخل متن تقاريرهم، فهي عنصر أساسي وليست ملحقاً','المرحلة 4'],
+  ['c6','استقبل المصادر من الفريق وولّد المراجع بنظام Harvard عبر موقع citethisforme.com، ثم شارك القائمة مع الجميع','المرحلة 3'],
+  ['c7','ذكّر الفريق بالمواعيد النهائية قبل كل معلم','طوال المشروع'],
+  ['c8','تأكد أن فيديو الورشة وصل لكل عضو ليرفقه مع ملفه','المرحلة 5']],
+ tips:['محضر قصير يُكتب في اليوم نفسه أفضل من محضر مفصل يُكتب بعد أيام','الأدلة هي ما يثبت من فعل ماذا، وتحليل الأدوار في M4 يقوم عليها','احفظ نسخة من كل شيء في مكان مشترك حتى لا يضيع بضياع جهاز','في تقريرك اربط عملك بتحليل أدوار الفريق ومثّل بأدلة حقيقية'],
+ rep:'النشاط 3 (M4, D3) والنشاط 4 (D4): تحليل أدوار الفريق بالأدلة، وأدلة قياس فعالية التطوير المهني CPD مثل التغذية الراجعة والإنجازات'}
+];
+var RBY={}; ROLES.forEach(function(r){RBY[r.id]=r;});
+var SECTIONS=[
+ {id:'intro',t:'مقدمة',w:200},
+ {id:'a1',t:'النشاط 1: مهارات التواصل وإدارة الوقت',w:1100},
+ {id:'sch',t:'جدول الورشة الذي صممه الفريق مع التبرير وخطط الطوارئ (عنصر أساسي داخل التقرير وليس ملحقاً)',w:0,x:1},
+ {id:'a2',t:'النشاط 2: حل المشكلات والتفكير النقدي',w:1100},
+ {id:'a3',t:'النشاط 3: ديناميكيات الفريق ودوري فيه',w:1000},
+ {id:'min',t:'ملخص محاضر اجتماعات الفريق (عنصر أساسي داخل التقرير وليس ملحقاً)',w:0,x:1},
+ {id:'a4',t:'النشاط 4: التطوير المهني CPD والتحفيز وخطة التطوير',w:1000},
+ {id:'concl',t:'الخاتمة',w:100},
+ {id:'refs',t:'المراجع بنظام Harvard (قائمة مسؤول التوثيق من CiteThisForMe)',w:0,x:1}];
+var KINDS={rate:'تقييم',warn:'تنبيه',praise:'إشادة',note:'ملاحظة'};
+var PHASES=[['الانطلاق','اجتماع أول، اختيار الأدوار هنا، وميثاق الفريق'],
+ ['المحتوى والجدول','البحث ودراسات الحالة ومسودة جدول الورشة'],
+ ['العرض والأنشطة','شرائح موحّدة، أنشطة تفاعلية، وبروفة الفريق'],
+ ['الورشة والتقارير','تقديم الورشة جماعياً وتصويرها بالفيديو، وتسجيل المشاكل، وبدء كتابة التقارير الفردية'],
+ ['المراجعة والتسليم','مراجعة المراجع والتنسيق، وتسليم التقارير والملفات']];
+
+/* ---------- الحالة ---------- */
+var S={db:null,uid:null,owner:false,canWrite:null,assets:null,dbState:'loading',
+  members:{},membersReady:false,claims:{},deliv:{},settings:{},myReport:null,reports:{},fb:{},
+  view:'overview',drafts:{},confirm:null,msg:{},pending:false,saveState:'',fbKind:{}};
+var queues={},fbSubs={},saveTimer=null;
+function enqueue(k,fn){var p=(queues[k]||Promise.resolve()).catch(function(){}).then(fn);queues[k]=p;return p;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function code(e){return (e&&e.code)||'خطأ';}
+function words(t){return String(t||'').trim().split(/\s+/).filter(Boolean).length;}
+function fmt(t){try{return new Date(t).toLocaleDateString('ar-u-nu-latn',{day:'numeric',month:'long',hour:'numeric',minute:'2-digit'});}catch(e){return '';}}
+function fmtD(d){try{return d.toLocaleDateString('ar-u-nu-latn',{day:'numeric',month:'long'});}catch(e){return '';}}
+function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:'';}
+function flash(k,text,kind){S.msg[k]={text:text,kind:kind||'ok'};renderSafe();setTimeout(function(){if(S.msg[k]&&S.msg[k].text===text){delete S.msg[k];renderSafe();}},6000);}
+function msgHtml(k){var m=S.msg[k];return m?'<div class="msg '+(m.kind==='err'?'err':'ok')+'" role="status">'+esc(m.text)+'</div>':'';}
+function has(o,k){return Object.prototype.hasOwnProperty.call(o,k);}
+function dv(k,fb){return has(S.drafts,k)?S.drafts[k]:(fb||'');}
+function lsName(){try{return localStorage.getItem('ws-name')||S.gname||'';}catch(e){return S.gname||'';}}
+function myMember(){return S.uid?S.members[S.uid]:null;}
+function holder(roleId){var c=S.claims[roleId];if(c&&c.uid&&S.members[c.uid]&&S.members[c.uid].role===roleId)return c.uid;var f=null;Object.keys(S.members).forEach(function(u){if(S.members[u].role===roleId)f=u;});return f;}
+function takenBy(roleId){var h=holder(roleId);if(h)return h;var c=S.claims[roleId];return c&&c.uid?c.uid:null;}
+function prog(m){var r=m&&RBY[m.role];if(!r)return {n:0,t:0,p:0};var n=0;r.tasks.forEach(function(t){if(m.done&&m.done[t[0]])n++;});return {n:n,t:r.tasks.length,p:Math.round(100*n/r.tasks.length)};}
+function chipRole(r){return '<span class="chip" style="--c:var('+r.c+')"><i class="dot"></i>'+esc(r.ar)+'</span>';}
+function slotFilled(s){return s&&(s.link||s.text||s.fileId);}
+function delivCount(u,r){var d=S.deliv[u],n=0;r.slots.forEach(function(s){if(d&&d.slots&&slotFilled(d.slots[s[0]]))n++;});return n;}
+function repWords(rep){var n=0;if(rep&&rep.sections)SECTIONS.forEach(function(s){if(!s.x)n+=words(rep.sections[s.id]);});return n;}
+function fbList(u){return S.fb[u]||[];}
+function unseen(u){var m=S.members[u],a=(m&&m.acks)||{};return fbList(u).filter(function(e){return !a[e.id];}).length;}
+function deadlineDate(){var p=(S.settings.deadline||DEFAULT_DEADLINE).split('-');return new Date(+p[0],+p[1]-1,+p[2],23,59,0);}
+function stars(cur,act,uid,ro){var h='<div class="stars'+(ro?' ro':'')+'" role="group" aria-label="التقييم بالنجوم">';for(var i=1;i<=5;i++)h+='<button type="button" class="'+(i<=cur?'on':'')+'"'+(ro?' tabindex="-1" disabled':' data-act="'+act+'" data-uid="'+esc(uid)+'" data-n="'+i+'" aria-pressed="'+(i<=cur)+'"')+' aria-label="'+i+' من 5">★</button>';return h+'</div>';}
+
+/* ---------- العروض ---------- */
+function head(){
+  var d=deadlineDate(),days=Math.max(0,Math.ceil((d-Date.now())/864e5));
+  return '<header class="top"><div><p class="eyebrow"><span class="ltr">U3 Professional Practice · HND Computing</span></p>'+
+  '<h1>غرفة عمل ورشة الأمن السيبراني</h1><p class="sub"><span class="ltr">Cybersecurity Awareness in the Age of Digital Transformation</span></p></div>'+
+  '<div class="deadline"><b>'+days+'</b><span>أيام حتى التسليم، '+esc(fmtD(d))+'</span></div></header>';
+}
+function nav(){
+  var n=S.uid?unseen(S.uid):0;
+  var items=[['overview','نظرة عامة'],['my-role','دوري'+(n?'<span class="badge" aria-label="'+n+' ملاحظات جديدة">'+n+'</span>':'')],['team','الفريق']];
+  if(S.owner)items.push(['leader-board','لوحة القائد']);
+  var cur=S.view.indexOf('section-')===0?'team':S.view;
+  return '<nav class="tabs" aria-label="الأقسام">'+items.map(function(i){return '<a href="#'+i[0]+'"'+(cur===i[0]?' aria-current="page"':'')+'>'+i[1]+'</a>';}).join('')+'</nav>';
+}
+function stateBanner(){
+  if(S.dbState==='noconfig')return '<div class="banner"><b>لم تُضبط إعدادات Firebase بعد</b><p class="muted" style="margin:4px 0 0">افتح الملف وألصق بيانات المشروع في أعلى السكربت كما في دليل الإعداد.</p></div>';
+  if(S.dbState==='signedout')return '<div class="banner"><b>سجّل الدخول لتستخدم الصفحة</b><p class="muted" style="margin:4px 0 8px">ادخل بحساب Google الخاص بك. افتح الرابط من Chrome أو Safari وليس من داخل واتساب.</p><button class="btn" data-act="login">تسجيل الدخول بحساب Google</button>'+msgHtml('login')+'</div>';
+  if(S.dbState==='slow')return '<div class="msg err">تعذّر الوصول إلى البيانات المحفوظة حتى الآن. ما تراه قد يكون قديماً، وسيتحدث تلقائياً عند عودة الاتصال.</div>';
+  if(S.dbState==='error')return '<div class="msg err">حدث خطأ في قراءة البيانات ('+esc(code(S.err))+'). أعد فتح الصفحة.</div>';
+  if(S.canWrite===false)return '<div class="msg err">حسابك الآن للمشاهدة فقط. اطلب من القائد أن يعطيك صلاحية مساهم (Contributor) من قائمة المشاركة حتى تحفظ دورك ومهامك.</div>';
+  return '';
+}
+function whoBar(){var m=myMember();if(!m||!RBY[m.role])return '';return '<div class="who">أنت: <b>'+esc(m.name)+'</b> '+chipRole(RBY[m.role])+'</div>';}
+
+function planRows(){
+  var t0=new Date();t0.setHours(0,0,0,0);var e=deadlineDate();e.setHours(0,0,0,0);
+  var D=Math.max(1,Math.round((e-t0)/864e5)+1),rows=[];
+  PHASES.forEach(function(p,i){
+    var s=Math.floor(i*D/5),en=Math.max(s,Math.floor((i+1)*D/5)-1);
+    var a=new Date(t0.getTime()+s*864e5),b=new Date(t0.getTime()+en*864e5);
+    rows.push(['المرحلة '+(i+1)+' · '+(s===en?fmtD(a):fmtD(a)+' إلى '+fmtD(b)),'<b style="color:var(--ink)">'+p[0]+':</b> '+p[1]]);
+  });
+  return rows;
+}
+
+function viewOverview(){
+  var acts=[
+   ['1','تقييم فاعلية مهارات التواصل: جدول الفعالية مع تبرير الأوقات وخطط الطوارئ، أساليب تواصل متنوعة، وشرح تطبيقك لإدارة الوقت','P1 P2 M1 D1','الجدول مشترك، والشرح والتقييم فرديان'],
+   ['2','تقنيات حل المشكلات (مثل Six-Step Model)، بحث في تقنيات إدارة الفعاليات، تبرير الاختيار، وتقييم نجاح الفعالية بالتفكير النقدي','P3 P4 M2 M3 D2','البحث يُقسّم، والكتابة فردية'],
+   ['3','أهمية ديناميكيات الفريق، تحليل أدوار الأعضاء، وتقييم نقدي لدورك أنت','P5 P6 M4 D3','تحليل الأدوار بالتعاون، والتقييم فردي'],
+   ['4','التطوير المهني المستمر CPD وأدلة قياسه، نظريات التحفيز، وخطة تطوير شخصية لأهدافك','P7 P8 P9 M5 D4','فردي بالكامل']];
+  var rows=acts.map(function(a){return '<tr><td><b>'+a[0]+'</b></td><td>'+a[1]+'</td><td><span class="ltr">'+a[2]+'</span></td><td><span class="'+(a[3]==='فردي بالكامل'?'tag-indiv':'tag-shared')+'">'+a[3]+'</span></td></tr>';}).join('');
+  var budget=SECTIONS.filter(function(s){return s.w;});
+  var gl=[['Team dynamics','ديناميكيات الفريق: كيف يتفاعل الأعضاء ويتعاونون'],['Contingency plan','خطة طوارئ: بديل جاهز إذا حصلت مشكلة'],['Critical reasoning','التفكير النقدي والمنطقي'],['Six-Step Problem Solving','نموذج حل المشكلات بست خطوات'],['CPD','التطوير المهني المستمر'],['Motivational theories','نظريات التحفيز'],['Harvard referencing','نظام توثيق المراجع هارفارد'],['Appendix','ملحق']];
+  return stateBanner()+
+  '<section class="panel"><h2>كيف تعمل هذه الصفحة</h2><ol class="steps">'+
+   '<li><div><b>ادخل بحسابك.</b> كل ما تدخله هنا محفوظ تلقائياً ولا يُحذف.</div></li>'+
+   '<li><div><b>اختر دورك</b> من تبويب «دوري». كل دور لشخص واحد فقط.</div></li>'+
+   '<li><div><b>أنجز مهامك وارفع مخرجات دورك</b> (مثلاً الجدول أو المراجع)، فيراها كل الفريق في تبويب «الفريق».</div></li>'+
+   '<li><div><b>اكتب مشروعك الفردي</b> في صفحة دورك بأسلوبك أنت. يُحفظ تلقائياً ولا يراه إلا أنت والقائد.</div></li>'+
+   '<li><div><b>اقرأ ملاحظات القائد</b> وتنبيهاته في تبويب «دوري»، فهدفها أن ينجح الجميع.</div></li></ol></section>'+
+  '<section class="panel"><h2>السيناريو</h2><p>أنتم متدربون في شركة <span class="ltr">SecureNet Solutions</span> المتخصصة في الأمن السيبراني. مهمتكم تنظيم وتقديم ورشة عمل احترافية ليوم كامل في قاعة الكلية لطلاب السنة الأخيرة بالتعاون مع عدة كليات.</p>'+
+  '<p>العنوان: <b>«التوعية بالأمن السيبراني في عصر التحول الرقمي»</b>. الهدف تثقيف الطلاب حول مخاطر التهديدات السيبرانية وتبني ممارسات رقمية آمنة، وتعزيز مهاراتهم في العمل الجماعي وحل المشكلات والتحدث أمام الجمهور.</p>'+
+  '<div class="grid3" style="margin-top:12px">'+['أساسيات الأمن السيبراني|Fundamentals of cybersecurity','التهديدات السيبرانية الشائعة|Common cyber threats','حماية البيانات والخصوصية|Data protection and privacy','السلوك الآمن على الإنترنت|Safe online behavior and best practices'].map(function(x,i){var p=x.split('|');return '<div class="role-card"><span class="small muted">المحور '+(i+1)+'</span><b>'+p[0]+'</b><span class="en ltr">'+p[1]+'</span></div>';}).join('')+'</div>'+
+  '<p class="small muted" style="margin-top:12px">كل عضو يقدّم جزءاً من الورشة حتى يظهر دليل على مهارات التحدث أمام الجمهور. القائد هو من يوزّع المحاور.</p></section>'+
+  '<section class="panel"><h2>ما المطلوب منكم</h2><p>العمل مشترك (تخطيط وتنفيذ الورشة)، والتقرير فردي. الدكتورة تقيّم مهاراتكم المهنية وليس معلوماتكم التقنية.</p>'+
+  '<div class="tbl"><table><thead><tr><th>النشاط</th><th>المطلوب باختصار</th><th>المعايير</th><th>مشترك أم فردي</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+  '<div class="cols"><section class="panel"><h2>التسليم والتنسيق</h2><ul class="plain">'+
+   '<li>تقرير فردي بصيغة Word، والجدول والمحاضر المشتركة داخل المتن كعنصر أساسي وليست ملحقات</li><li>ملف العرض التقديمي، وفيديو التقديم الجماعي يُرفق مع ملف كل عضو داخل المجموعة</li><li>خط <span class="ltr">Times New Roman</span> بحجم 12 وتباعد أسطر 1.5</li><li>عناوين وفقرات وأقسام فرعية، مع صور ومخططات داعمة</li><li>توثيق كل مصدر بنظام Harvard وقائمة مراجع</li><li>4000 إلى 4500 كلمة، والإيجاز والوضوح مطلوبان</li><li>المدرّسة: Haya Alhussien</li></ul>'+
+   '<p class="small muted" style="margin-top:10px">الموعد المعتمد في هذه الصفحة: <b>'+esc(fmtD(deadlineDate()))+'</b> ويعدّله القائد. الموعد المكتوب في ورقة الأسايمنت هو 30-12-2026.</p>'+
+   '<p class="small muted">تشابه المعلومات بين تقارير الأعضاء مقبول بحسب الدكتورة، لكن اكتب كل عضو بأسلوبه وبكلماته.</p></section>'+
+  '<section class="panel"><h2>توزيع الكلمات المقترح</h2><div class="tbl"><table><tbody>'+budget.map(function(b){return '<tr><td>'+b.t+'</td><td style="text-align:end;font-variant-numeric:tabular-nums">'+b.w+'</td></tr>';}).join('')+'</tbody></table></div></section></div>'+
+  '<section class="panel"><h2>خطة المراحل</h2><p class="small muted">موزّعة تلقائياً من اليوم حتى موعد التسليم.</p><div class="tl">'+planRows().map(function(t){return '<div><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';}).join('')+'</div></section>'+
+  '<section class="panel"><h2>أجوبة الدكتورة</h2><div class="tbl"><table><thead><tr><th>السؤال</th><th>الجواب</th></tr></thead><tbody>'+
+  '<tr><td>هل نرفق الجدول والمحاضر المشتركة كملاحق؟</td><td><b>لا.</b> يجب إرفاقهما كعنصر أساسي داخل التقرير وليس ملحقات، لأن الجدول متطلب</td></tr>'+
+  '<tr><td>هل يكتب كل واحد تقريره بأسلوبه حتى لو تشابهت المعلومات؟</td><td><b>نعم.</b></td></tr>'+
+  '<tr><td>هل يقدّم كل واحد ويصوّر بشكل منفصل؟</td><td><b>لا.</b> التقديم جماعي ويتم تصويره، ويُرفق الفيديو مع ملف كل واحد في المجموعة</td></tr></tbody></table></div>'+
+  '<p class="small muted" style="margin-top:10px">سؤال متبقٍ للتأكد: هل يُرفق ملف الشرائح نفسه أيضاً مع ملف كل عضو إلى جانب الفيديو؟</p></section>'+
+  '<section class="panel"><h2>مصطلحات مهمة</h2><div class="tbl"><table><thead><tr><th>English</th><th>المعنى</th></tr></thead><tbody>'+gl.map(function(g){return '<tr><td><span class="ltr">'+g[0]+'</span></td><td>'+g[1]+'</td></tr>';}).join('')+'</tbody></table></div></section>';
+}
+
+function viewPick(){
+  var h='<section class="panel"><h2>اختر دورك في الفريق</h2><p class="muted">اكتب اسمك ثم اختر دوراً واحداً. الدور المحجوز لا يستطيع غيرك اختياره، وتستطيع تغيير دورك لاحقاً.</p>'+
+  '<div class="field"><label for="nameIn">اسمك كما سيراه الفريق</label><input type="text" id="nameIn" data-draft="name" autocomplete="name" value="'+esc(dv('name',lsName()))+'"></div>'+msgHtml('pick')+'</section><div class="grid3">';
+  ROLES.forEach(function(r){
+    var u=takenBy(r.id),m=u?S.members[u]:null,lock=r.ownerOnly&&!S.owner;
+    var action=u?'<span class="chip">محجوز: '+esc(m?m.name:'زميل')+'</span>':lock?'<span class="chip">مخصص لقائد الفريق</span>':'<button class="btn" data-act="pick" data-role="'+r.id+'"'+(S.canWrite===false?' disabled':'')+'>اختيار هذا الدور</button>';
+    h+='<div class="role-card" style="--c:var('+r.c+')"><h3><i class="dot"></i>'+esc(r.ar)+'</h3><span class="en ltr">'+esc(r.en)+'</span><p class="small" style="margin:0">'+esc(r.sum)+'</p><div style="margin-top:auto">'+action+'</div></div>';
+  });
+  return h+'</div>';
+}
+
+function fbHtml(u,m){
+  var l=fbList(u);if(!l.length)return '<p class="muted small">لا توجد ملاحظات بعد.</p>';
+  var acks=(m&&m.acks)||{};
+  return l.map(function(e){
+    return '<div class="fb'+(e.kind==='warn'?' warn':'')+'"><div class="row"><span class="chip'+(e.kind==='warn'?' warn':e.kind==='praise'?' good':'')+'">'+esc(KINDS[e.kind]||'ملاحظة')+'</span>'+(e.stars?stars(e.stars,'',u,true):'')+'<span class="small muted">'+esc(fmt(e.createdAt))+'</span></div><p>'+esc(e.text)+'</p>'+
+    (acks[e.id]?'<span class="small muted">اطّلع العضو: '+esc(fmt(acks[e.id]))+'</span>':(u===S.uid?'<button class="btn small" data-act="ack" data-id="'+esc(e.id)+'">اطّلعت على الملاحظة</button>':'<span class="small muted">لم يطّلع بعد</span>'))+'</div>';
+  }).join('');
+}
+
+function slotEditor(r){
+  var d=(S.deliv[S.uid]&&S.deliv[S.uid].slots)||{};
+  return '<section class="panel"><h2>مخرجات دوري</h2><p class="small muted">ما ترفعه هنا يراه كل أعضاء الفريق في تبويب «الفريق». أضف رابطاً أو ملفاً أو انسخ المحتوى نصاً.</p>'+
+  r.slots.map(function(s){var o=d[s[0]]||{},id=s[0];
+    return '<div style="border-top:1px solid var(--line);padding-top:14px;margin-top:14px"><div class="row" style="justify-content:space-between"><b>'+esc(s[1])+'</b>'+(slotFilled(o)?'<span class="chip good">مرفوع '+esc(fmt(o.updatedAt))+'</span>':'<span class="chip">لم يُرفع بعد</span>')+'</div>'+
+    '<div class="field" style="margin-top:8px"><label for="dl_'+id+'_link">رابط الملف</label><input type="url" id="dl_'+id+'_link" data-draft="dl_'+id+'_link" placeholder="https://" value="'+esc(dv('dl_'+id+'_link',o.link))+'"></div>'+
+    (S.assets?'<div class="field"><label for="fl_'+id+'">أو ارفع PDF</label><input type="file" id="fl_'+id+'" data-slotfile="'+id+'" accept=".pdf,.txt,.md,application/pdf,text/plain">'+(o.fileId?'<p class="small">الملف الحالي: <a href="/_blob/'+esc(o.fileId)+'" target="_blank" rel="noopener">'+esc(o.fileName||'ملف')+'</a></p>':'')+'</div>':(o.fileId?'<p class="small"><a href="/_blob/'+esc(o.fileId)+'" target="_blank" rel="noopener">'+esc(o.fileName||'ملف')+'</a></p>':''))+
+    '<div class="field"><label for="dl_'+id+'_text">أو اكتب المحتوى هنا</label><textarea id="dl_'+id+'_text" dir="auto" data-draft="dl_'+id+'_text">'+esc(dv('dl_'+id+'_text',o.text))+'</textarea></div>'+
+    msgHtml('dl_'+id)+'<button class="btn" data-act="saveSlot" data-slot="'+id+'"'+(S.canWrite===false?' disabled':'')+'>حفظ</button></div>';}).join('')+'</section>';
+}
+
+function reportEditor(){
+  var rep=S.myReport||{},secs=rep.sections||{},tot=0;
+  var blocks=SECTIONS.map(function(s){var v=dv('rs_'+s.id,secs[s.id]),w=words(v);if(!s.x)tot+=w;
+    return '<div class="field"><label for="rs_'+s.id+'">'+esc(s.t)+'</label><textarea id="rs_'+s.id+'" dir="auto" data-draft="rs_'+s.id+'" data-auto="r" data-wc="'+s.id+'" style="min-height:'+(s.w>500?220:130)+'px">'+esc(v)+'</textarea><p class="hint">'+(s.x?'عنصر أساسي لا يُحسب ضمن كلمات التقرير. كتبت ':s.w?'المقترح حوالي '+s.w+' كلمة، وكتبت ':'كتبت ')+'<b id="wc_'+s.id+'">'+w+'</b> كلمة</p></div>';}).join('');
+  var fileHtml=rep.fileId?'<p class="small">الملف الحالي: <a href="/_blob/'+esc(rep.fileId)+'" target="_blank" rel="noopener">'+esc(rep.fileName||'ملف')+'</a></p>':'';
+  return '<section class="panel"><h2>مشروعي الفردي</h2><p class="small muted">اكتب تقريرك هنا بأسلوبك أنت. يُحفظ تلقائياً بعد توقفك عن الكتابة، ولا يراه إلا أنت والقائد. عند التسليم انسخه إلى ملف Word بخط Times New Roman حجم 12.</p>'+
+  '<p class="chip">المجموع: <b id="wc_total">'+tot+'</b> كلمة من 4000 إلى 4500</p><p class="small muted" id="saveState" style="margin-top:6px">'+esc(S.saveState)+'</p>'+blocks+
+  '<div class="field"><label for="rVideo">رابط فيديو التقديم الجماعي (يُرفق مع ملفك)</label><input type="url" id="rVideo" data-draft="rVideo" data-auto="r" placeholder="https://" value="'+esc(dv('rVideo',rep.video))+'"></div>'+
+  '<details><summary>أو أرفق التقرير كرابط</summary><div class="field" style="margin-top:10px"><label for="rLink">رابط التقرير (بصلاحية المشاهدة)</label><input type="url" id="rLink" data-draft="rLink" data-auto="r" placeholder="https://" value="'+esc(dv('rLink',rep.link))+'"></div>'+
+  (S.assets?'<div class="field"><label for="fileIn">ملف PDF</label><input type="file" id="fileIn" accept=".pdf,.txt,.md,application/pdf,text/plain"><p class="hint">ملف Word غير مدعوم، فصدّره PDF أو ضع رابطه.</p>'+fileHtml+'</div>':fileHtml)+'</details>'+
+  '<div class="field"><label for="rNote">ملاحظة للقائد (اختياري)</label><textarea id="rNote" dir="auto" data-draft="rNote" data-auto="r" style="min-height:70px">'+esc(dv('rNote',rep.note))+'</textarea></div>'+
+  msgHtml('report')+'<button class="btn" data-act="saveReport"'+(S.canWrite===false?' disabled':'')+'>حفظ الآن</button></section>';
+}
+
+function viewRole(){
+  var pre=stateBanner();
+  if(S.dbState==='signedout'||S.dbState==='noconfig')return pre+'<p class="muted">لاختيار دورك سجّل الدخول أولاً.</p>';
+  if(!S.membersReady)return pre+'<p class="muted">جارٍ تحميل بيانات الفريق…</p>';
+  var m=myMember();
+  if(!m||!RBY[m.role])return pre+viewPick();
+  var r=RBY[m.role],p=prog(m);
+  var tasks=r.tasks.map(function(t){var d=m.done&&m.done[t[0]];return '<div class="task'+(d?' done':'')+'"><input type="checkbox" id="t_'+t[0]+'" data-task="'+t[0]+'"'+(d?' checked':'')+(S.canWrite===false?' disabled':'')+'><label for="t_'+t[0]+'">'+esc(t[1])+'</label><span class="when">'+esc(t[2])+'</span></div>';}).join('');
+  var conf=S.confirm==='changeRole'?'<button class="btn danger" data-act="changeRoleYes">تأكيد: أخلِ دوري</button> <button class="btn ghost" data-act="cancel">تراجع</button>':'<button class="btn ghost" data-act="changeRole">تغيير دوري</button>';
+  var n=unseen(S.uid);
+  return pre+'<section class="panel" style="--c:var('+r.c+')"><div class="row" style="justify-content:space-between"><div><div class="row"><i class="dot"></i><h2>'+esc(r.ar)+'</h2></div><span class="muted small ltr">'+esc(r.en)+'</span></div><div>'+conf+'</div></div>'+
+   '<p style="margin-top:10px">'+esc(r.sum)+'</p><div class="row"><div class="bar" style="flex:1;min-width:160px"><i style="width:'+p.p+'%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">'+p.n+' من '+p.t+' مهام</span></div>'+msgHtml('role')+'</section>'+
+  '<div class="cols"><div><section class="panel"><h2>مهامي</h2>'+tasks+'</section>'+slotEditor(r)+reportEditor()+'</div>'+
+  '<div><section class="panel"><h2>ملاحظات القائد عليّ'+(n?' <span class="badge">'+n+' جديد</span>':'')+'</h2><p class="small muted">هدفها مساعدتك على النجاح. اقرأها وعلّم أنك اطّلعت عليها.</p>'+fbHtml(S.uid,m)+'</section>'+
+  (r.tool?'<section class="panel"><h2>أداة دورك</h2><p><a href="'+esc(r.tool[0])+'" target="_blank" rel="noopener">'+esc(r.tool[1])+'</a></p></section>':'')+'<section class="panel"><h2>نصائح لدورك</h2><ul class="plain">'+r.tips.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></section>'+
+  '<section class="panel"><h2>ماذا تركّز عليه في تقريرك</h2><p>'+esc(r.rep)+'</p><p class="small muted">النشاط 4 (CPD وخطة التطوير الشخصية) مطلوب من كل عضو بغض النظر عن دوره.</p></section></div></div>';
+}
+
+function viewTeam(){
+  var tot=0,done=0;Object.keys(S.members).forEach(function(u){var p=prog(S.members[u]);tot+=p.t;done+=p.n;});
+  var h=stateBanner()+'<section class="panel"><h2>الفريق</h2><p class="small muted">افتح قسم أي دور لترى مهامه ومخرجاته.</p><div class="row"><div class="bar" style="flex:1;min-width:160px"><i style="width:'+(tot?Math.round(100*done/tot):0)+'%"></i></div><span class="small muted">'+Object.keys(S.members).length+' من 6 اختاروا أدوارهم</span></div>'+msgHtml('team')+'</section><div class="grid3">';
+  ROLES.forEach(function(r){
+    var u=holder(r.id),m=u?S.members[u]:null,p=prog(m);
+    var free='';
+    if(S.owner&&u&&u!==S.uid)free=S.confirm==='free_'+u?'<div class="row"><button class="btn danger small" data-act="freeYes" data-uid="'+esc(u)+'" data-role="'+r.id+'">تأكيد الإخلاء</button><button class="btn ghost small" data-act="cancel">تراجع</button></div>':'<button class="btn ghost small" data-act="free" data-uid="'+esc(u)+'">إخلاء الدور</button>';
+    h+='<div class="role-card" style="--c:var('+r.c+')"><h3><i class="dot"></i>'+esc(r.ar)+'</h3><span class="en ltr">'+esc(r.en)+'</span><div>'+(m?'<b>'+esc(m.name)+'</b>':'<span class="muted">شاغر</span>')+'</div>'+
+    (m?'<div class="bar"><i style="width:'+p.p+'%"></i></div><span class="small muted">مهام: '+p.n+' من '+p.t+' · مخرجات: '+delivCount(u,r)+' من '+r.slots.length+'</span>':'')+
+    '<div class="row" style="margin-top:auto"><a class="btn small" href="#section-'+r.id+'">فتح القسم</a>'+free+'</div></div>';
+  });
+  return h+'</div>';
+}
+
+function delivView(u,r){
+  var d=(S.deliv[u]&&S.deliv[u].slots)||{};
+  return r.slots.map(function(s){var o=d[s[0]],l=o&&safeUrl(o.link);
+    return '<div style="border-top:1px solid var(--line);padding:12px 0"><div class="row" style="justify-content:space-between"><b>'+esc(s[1])+'</b>'+(slotFilled(o)?'<span class="chip good">مرفوع</span>':'<span class="chip">لم يُرفع بعد</span>')+'</div>'+
+    (o&&o.link?'<p class="small">الرابط: '+(l?'<a href="'+esc(l)+'" target="_blank" rel="noopener">'+esc(o.link)+'</a>':esc(o.link))+'</p>':'')+
+    (o&&o.fileId?'<p class="small">الملف: <a href="/_blob/'+esc(o.fileId)+'" target="_blank" rel="noopener">'+esc(o.fileName||'ملف')+'</a></p>':'')+
+    (o&&o.text?'<details><summary>المحتوى</summary><div class="rtext">'+esc(o.text)+'</div></details>':'')+
+    (o&&o.updatedAt?'<p class="small muted">آخر تحديث: '+esc(fmt(o.updatedAt))+'</p>':'')+'</div>';}).join('');
+}
+
+function feedbackPanel(u,m){
+  var kind=S.fbKind[u]||'rate',st=has(S.drafts,'fs_'+u)?S.drafts['fs_'+u]:0;
+  var kb=Object.keys(KINDS).map(function(k){return '<button type="button" class="btn small ghost'+(kind===k?' sel':'')+'" data-act="fbkind" data-uid="'+esc(u)+'" data-k="'+k+'" aria-pressed="'+(kind===k)+'">'+KINDS[k]+'</button>';}).join(' ');
+  return '<section class="panel"><h2>متابعتي لـ '+esc(m.name)+'</h2><p class="small muted">كل إضافة تُسجَّل بتاريخها ولا يمكن تعديلها من الصفحة، فهي سجل أمين تعرضه على الدكتورة. يراها العضو أيضاً.</p>'+
+  '<div class="row" style="margin-bottom:10px">'+kb+'</div>'+
+  (kind==='rate'?'<div class="field"><label>التقييم بالنجوم</label>'+stars(st,'fbstar',u,false)+'</div>':'')+
+  '<div class="field"><label for="fbt_'+esc(u)+'">تعليقي</label><textarea id="fbt_'+esc(u)+'" dir="auto" data-draft="ft_'+esc(u)+'" style="min-height:90px">'+esc(dv('ft_'+u,''))+'</textarea><p class="hint">اكتب ما الذي تم، وما المطلوب منه، ومتى.</p></div>'+
+  msgHtml('fb_'+u)+'<button class="btn" data-act="addFb" data-uid="'+esc(u)+'">إضافة إلى سجل المتابعة</button></section>'+
+  '<section class="panel"><h2>سجل المتابعة</h2>'+fbHtml(u,m)+'</section>';
+}
+
+function viewSection(id){
+  var r=RBY[id];if(!r)return viewTeam();
+  var u=holder(id),m=u?S.members[u]:null;
+  var h=stateBanner()+'<p><a href="#team">العودة إلى الفريق</a></p>';
+  h+='<section class="panel" style="--c:var('+r.c+')"><div class="row"><i class="dot"></i><h2>'+esc(r.ar)+'</h2></div><span class="muted small ltr">'+esc(r.en)+'</span><p style="margin-top:8px">'+esc(r.sum)+'</p>'+
+   '<p>المسؤول: '+(m?'<b>'+esc(m.name)+'</b>':'<span class="muted">لم يختر أحد هذا الدور بعد</span>')+'</p></section>';
+  if(!m)return h;
+  var p=prog(m);
+  h+='<div class="cols"><div><section class="panel"><h2>المهام</h2><div class="row"><div class="bar" style="flex:1;min-width:160px"><i style="width:'+p.p+'%"></i></div><span class="small muted">'+p.n+' من '+p.t+'</span></div>'+
+   r.tasks.map(function(t){var d=m.done&&m.done[t[0]];return '<div class="task'+(d?' done':'')+'"><span aria-hidden="true">'+(d?'✓':'○')+'</span><span class="tx">'+esc(t[1])+'</span><span class="when">'+esc(t[2])+'</span></div>';}).join('')+'</section>'+
+   '<section class="panel"><h2>مخرجات الدور</h2>'+delivView(u,r)+(u===S.uid?'<p class="small"><a href="#my-role">عدّل مخرجاتك من تبويب دوري</a></p>':'')+'</section></div><div>';
+  if(S.owner&&u!==S.uid){
+    var rep=S.reports[u]||{},l=safeUrl(rep.link);
+    h+=feedbackPanel(u,m);
+    h+='<section class="panel"><h2>مشروعه الفردي</h2><p class="small muted">مجموع الكلمات: '+repWords(rep)+'</p>'+(rep.video?'<p>فيديو التقديم: '+(safeUrl(rep.video)?'<a href="'+esc(rep.video)+'" target="_blank" rel="noopener">'+esc(rep.video)+'</a>':esc(rep.video))+'</p>':'<p class="small muted">لم يضع رابط الفيديو بعد.</p>')+
+     (rep.link?'<p>الرابط: '+(l?'<a href="'+esc(l)+'" target="_blank" rel="noopener">'+esc(rep.link)+'</a>':esc(rep.link))+'</p>':'')+
+     (rep.fileId?'<p>الملف: <a href="/_blob/'+esc(rep.fileId)+'" target="_blank" rel="noopener">'+esc(rep.fileName||'ملف')+'</a></p>':'')+
+     SECTIONS.map(function(s){var v=rep.sections&&rep.sections[s.id];return v?'<details><summary>'+esc(s.t)+' ('+words(v)+' كلمة)</summary><div class="rtext">'+esc(v)+'</div></details>':'';}).join('')+
+     (rep.note?'<p class="small muted">ملاحظة العضو: '+esc(rep.note)+'</p>':'')+
+     (rep.updatedAt?'<p class="small muted">آخر تحديث: '+esc(fmt(rep.updatedAt))+'</p>':'<p class="muted">لم يبدأ بالكتابة بعد.</p>')+'</section>';
+  }else{
+    h+='<section class="panel"><h2>نصائح الدور</h2><ul class="plain">'+r.tips.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></section>';
+  }
+  return h+'</div></div>';
+}
+
+function buildSummary(){
+  var L=['تقرير متابعة الفريق (من سجل غرفة العمل، التواريخ كما سُجّلت)',''];
+  ROLES.forEach(function(r){
+    var u=holder(r.id),m=u?S.members[u]:null;if(!m)return;
+    var p=prog(m);
+    L.push(r.ar+' ('+r.en+') - '+m.name);
+    L.push('المهام: '+p.n+' من '+p.t+' | المخرجات: '+delivCount(u,r)+' من '+r.slots.length+(S.reports[u]?' | كلمات التقرير: '+repWords(S.reports[u]):''));
+    var l=fbList(u).slice().reverse();
+    if(!l.length)L.push('  لا توجد ملاحظات مسجلة');
+    l.forEach(function(e){L.push('  - '+fmt(e.createdAt)+' | '+(KINDS[e.kind]||'ملاحظة')+(e.stars?' | '+e.stars+' من 5':'')+' | '+e.text+((m.acks&&m.acks[e.id])?' | اطّلع: '+fmt(m.acks[e.id]):' | لم يطّلع بعد'));});
+    L.push('');
+  });
+  return L.join('\n');
+}
+
+function viewLeader(){
+  if(!S.owner)return '<p class="muted">جارٍ التحميل…</p>';
+  var rows=ROLES.map(function(r){
+    var u=holder(r.id),m=u?S.members[u]:null;
+    if(!m)return '<tr><td>'+chipRole(r)+'</td><td colspan="6" class="muted">شاغر</td></tr>';
+    var p=prog(m),l=fbList(u),warns=l.filter(function(e){return e.kind==='warn';}).length,last=l.filter(function(e){return e.stars;})[0];
+    return '<tr><td>'+chipRole(r)+'</td><td>'+esc(m.name)+'</td><td style="font-variant-numeric:tabular-nums">'+p.n+'/'+p.t+'</td><td style="font-variant-numeric:tabular-nums">'+delivCount(u,r)+'/'+r.slots.length+'</td><td style="font-variant-numeric:tabular-nums">'+(u===S.uid?'-':repWords(S.reports[u]))+'</td><td>'+(u===S.uid?'-':(warns?'<span class="chip warn">'+warns+' تنبيه</span> ':'')+(last?last.stars+' ★':(l.length?l.length+' ملاحظة':'لا شيء')))+'</td><td><a href="#section-'+r.id+'">فتح</a></td></tr>';
+  }).join('');
+  var sum=buildSummary();
+  var dl=S.settings.deadline||DEFAULT_DEADLINE;
+  return stateBanner()+'<section class="panel"><h2>لوحة القائد</h2><p>نظرة على الفريق كله. لتقييم عضو أو تنبيهه افتح قسمه من الجدول، وهناك تضيف النجوم وتعليقك.</p>'+
+  '<div class="tbl"><table><thead><tr><th>الدور</th><th>العضو</th><th>المهام</th><th>المخرجات</th><th>كلمات التقرير</th><th>المتابعة</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+  '<section class="panel"><h2>موعد التسليم</h2><div class="row"><input type="date" id="dlIn" data-draft="deadline" value="'+esc(dv('deadline',dl))+'" style="max-width:220px"><button class="btn" data-act="saveDeadline">حفظ الموعد</button></div>'+msgHtml('dl')+'</section>'+
+  '<section class="panel"><h2>ملخص المتابعة للدكتورة</h2><p class="small muted">يتولّد تلقائياً من السجل بتواريخه، وتستطيع لصقه في تقريرك (النشاط 3) كدليل على متابعتك للفريق.</p>'+
+  '<textarea id="sumTxt" readonly dir="auto" style="min-height:220px">'+esc(sum)+'</textarea>'+msgHtml('sum')+'<div style="margin-top:10px"><button class="btn" data-act="copySum">نسخ الملخص</button></div></section>';
+}
+
+function render(){
+  S.pending=false;
+  var v;
+  if(S.view.indexOf('section-')===0)v=viewSection(S.view.slice(8));
+  else v=({overview:viewOverview,'my-role':viewRole,team:viewTeam,'leader-board':viewLeader}[S.view]||viewOverview)();
+  $app.innerHTML='<div class="wrap">'+head()+nav()+whoBar()+v+'</div>';
+}
+function typing(){var a=document.activeElement;return !!(a&&$app.contains(a)&&(a.tagName==='TEXTAREA'||(a.tagName==='INPUT'&&(a.type==='text'||a.type==='url'||a.type==='date'))));}
+function renderSafe(){if(typing())S.pending=true;else render();}
+function route(){
+  var h=(location.hash||'').slice(1);
+  var ok=['overview','my-role','team','leader-board'].indexOf(h)>-1||(h.indexOf('section-')===0&&RBY[h.slice(8)]);
+  S.view=ok?h:'overview';if(S.view==='leader-board'&&!S.owner&&S.ownerKnown)S.view='overview';S.confirm=null;render();window.scrollTo(0,0);
+}
+
+/* ---------- الإجراءات ---------- */
+async function pickRole(id){
+  var name=(dv('name',lsName())||'').trim();
+  if(!name){flash('pick','اكتب اسمك أولاً','err');return;}
+  var r=RBY[id];if(r.ownerOnly&&!S.owner){flash('pick','هذا الدور لقائد الفريق','err');return;}
+  var t=takenBy(id);if(t&&t!==S.uid){flash('pick','هذا الدور محجوز لزميل آخر','err');return;}
+  try{
+    var okc=await S.db.claim(id,S.uid);
+    if(!okc){flash('pick','سبقك زميل إلى هذا الدور','err');return;}
+    await enqueue('m',function(){return S.db.doc('members/'+S.uid).set({name:name,role:id,done:{},acks:{},joinedAt:Date.now(),updatedAt:Date.now()});});
+    try{localStorage.setItem('ws-name',name);}catch(e){}
+    flash('role','تم حفظ دورك');
+  }catch(e){flash('pick','لم يُحفظ الدور ('+code(e)+')','err');}
+}
+function toggleTask(id,val){
+  enqueue('m',function(){var o={};o[id]=val;return S.db.doc('members/'+S.uid).update({done:o,updatedAt:Date.now()});})
+   .catch(function(e){flash('role','لم يُحفظ التغيير ('+code(e)+')','err');});
+}
+function freeRole(uid,roleId,key){
+  Promise.all([S.db.doc('roles/'+roleId).delete(),S.db.doc('members/'+uid).delete()]).catch(function(e){flash(key,'تعذّر التنفيذ ('+code(e)+')','err');});
+}
+function ack(id){
+  enqueue('m',function(){var o={};o[id]=Date.now();return S.db.doc('members/'+S.uid).update({acks:o});}).catch(function(e){flash('role','تعذّر الحفظ ('+code(e)+')','err');});
+}
+function setSaveState(t){S.saveState=t;var e=document.getElementById('saveState');if(e)e.textContent=t;}
+function reportDoc(extra){
+  var b=S.myReport||{},secs=Object.assign({},b.sections||{});
+  SECTIONS.forEach(function(s){secs[s.id]=dv('rs_'+s.id,secs[s.id]);});
+  var doc=Object.assign({},b,{sections:secs,link:(dv('rLink',b.link)||'').trim(),note:dv('rNote',b.note),video:(dv('rVideo',b.video)||'').trim()},extra||{},{updatedAt:Date.now()});
+  if((doc.link&&!safeUrl(doc.link))||(doc.video&&!safeUrl(doc.video)))return {err:'الرابط يجب أن يبدأ بـ https://'};
+  var len=0;SECTIONS.forEach(function(s){len+=(secs[s.id]||'').length;});
+  if(len>200000)return {err:'النص طويل جداً، استخدم رابطاً أو ملف PDF'};
+  if(!doc.submittedAt&&(doc.link||doc.fileId||len))doc.submittedAt=Date.now();
+  return {doc:doc};
+}
+function saveReport(silent,extra){
+  var x=reportDoc(extra);if(x.err){flash('report',x.err,'err');return Promise.resolve();}
+  setSaveState('جارٍ الحفظ…');
+  return enqueue('r',function(){return S.db.doc('reports/'+S.uid).set(x.doc);})
+   .then(function(){setSaveState('تم الحفظ '+fmt(Date.now()));if(!silent)flash('report','تم حفظ مشروعك');})
+   .catch(function(e){setSaveState('لم يُحفظ');flash('report','لم يُحفظ ('+code(e)+')','err');});
+}
+function scheduleSave(){setSaveState('تعديلات لم تُحفظ بعد…');clearTimeout(saveTimer);saveTimer=setTimeout(function(){saveReport(true);},2000);}
+function saveSlot(sid,extra){
+  var old=((S.deliv[S.uid]||{}).slots||{})[sid]||{};
+  var cur=Object.assign({},old,{link:(dv('dl_'+sid+'_link',old.link)||'').trim(),text:dv('dl_'+sid+'_text',old.text)},extra||{},{updatedAt:Date.now()});
+  if(cur.link&&!safeUrl(cur.link)){flash('dl_'+sid,'الرابط يجب أن يبدأ بـ https://','err');return Promise.resolve();}
+  if((cur.text||'').length>40000){flash('dl_'+sid,'النص طويل جداً، استخدم رابطاً أو ملفاً','err');return Promise.resolve();}
+  return enqueue('d',function(){var b=S.deliv[S.uid]||{},slots=Object.assign({},b.slots||{});slots[sid]=cur;return S.db.doc('deliverables/'+S.uid).set({slots:slots,updatedAt:Date.now()});})
+   .then(function(){flash('dl_'+sid,'تم الحفظ، ويراه الفريق الآن');}).catch(function(e){flash('dl_'+sid,'لم يُحفظ ('+code(e)+')','err');});
+}
+function fileType(f){var n=f.name||'';return /\.pdf$/i.test(n)?'application/pdf':/\.md$/i.test(n)?'text/markdown':/\.txt$/i.test(n)?'text/plain':'';}
+function uploadFor(f,key,after){
+  if(!f)return;if(!S.assets){flash(key,'رفع الملفات غير متاح لحسابك، استخدم الرابط','err');return;}
+  var t=fileType(f);if(!t){flash(key,'الصيغ المدعومة PDF أو TXT أو MD. حوّل ملف Word إلى PDF','err');return;}
+  flash(key,'جارٍ رفع الملف…');
+  S.assets.upload(f,{type:t}).then(function(r){return after({fileId:r.id,fileName:f.name,fileSize:r.sizeBytes});}).catch(function(e){flash(key,'تعذّر رفع الملف ('+code(e)+')','err');});
+}
+function addFb(u){
+  var kind=S.fbKind[u]||'rate',st=has(S.drafts,'fs_'+u)?S.drafts['fs_'+u]:0,text=(dv('ft_'+u,'')||'').trim();
+  if(kind==='rate'&&!st){flash('fb_'+u,'اختر عدد النجوم أولاً','err');return;}
+  if(text.length<3){flash('fb_'+u,'اكتب تعليقك أولاً','err');return;}
+  var o={kind:kind,text:text,createdAt:Date.now()};if(kind==='rate')o.stars=st;
+  S.db.collection('feedback/'+u+'/items').add(o).then(function(){delete S.drafts['ft_'+u];delete S.drafts['fs_'+u];flash('fb_'+u,'أُضيفت إلى سجل المتابعة');}).catch(function(e){flash('fb_'+u,'لم تُحفظ ('+code(e)+')','err');});
+}
+function saveDeadline(){
+  var v=dv('deadline',S.settings.deadline||DEFAULT_DEADLINE);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){flash('dl','اختر تاريخاً صحيحاً','err');return;}
+  S.db.doc('settings/config').set({deadline:v,updatedAt:Date.now()}).then(function(){flash('dl','تم حفظ الموعد');}).catch(function(e){flash('dl','لم يُحفظ ('+code(e)+')','err');});
+}
+function copySum(){
+  var t=buildSummary(),sel=function(){var e=document.getElementById('sumTxt');if(e){e.focus();e.select();}flash('sum','انسخ النص المحدد يدوياً','err');};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){flash('sum','تم النسخ');},sel);else sel();
+}
+
+$app.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]');if(!b)return;
+  var a=b.dataset.act;
+  if(a==='cancel'){S.confirm=null;render();return;}
+  if(a==='login'){if(window.__doLogin)window.__doLogin();return;}
+  if(!S.db)return;
+  if(a==='pick')pickRole(b.dataset.role);
+  else if(a==='saveReport'){clearTimeout(saveTimer);saveReport(false);}
+  else if(a==='saveSlot')saveSlot(b.dataset.slot);
+  else if(a==='ack')ack(b.dataset.id);
+  else if(a==='addFb')addFb(b.dataset.uid);
+  else if(a==='fbkind'){S.fbKind[b.dataset.uid]=b.dataset.k;render();}
+  else if(a==='fbstar'){S.drafts['fs_'+b.dataset.uid]=+b.dataset.n;render();}
+  else if(a==='changeRole'){S.confirm='changeRole';render();}
+  else if(a==='changeRoleYes'){S.confirm=null;var m=myMember();if(m)freeRole(S.uid,m.role,'role');}
+  else if(a==='free'){S.confirm='free_'+b.dataset.uid;render();}
+  else if(a==='freeYes'){S.confirm=null;freeRole(b.dataset.uid,b.dataset.role,'team');}
+  else if(a==='saveDeadline')saveDeadline();
+  else if(a==='copySum')copySum();
+});
+$app.addEventListener('input',function(e){
+  var t=e.target;if(!t.dataset||!t.dataset.draft)return;
+  S.drafts[t.dataset.draft]=t.value;
+  if(t.dataset.wc){
+    var w=document.getElementById('wc_'+t.dataset.wc);if(w)w.textContent=words(t.value);
+    var secs=(S.myReport&&S.myReport.sections)||{},tot=0;SECTIONS.forEach(function(s){if(!s.x)tot+=words(dv('rs_'+s.id,secs[s.id]));});
+    var te=document.getElementById('wc_total');if(te)te.textContent=tot;
+  }
+  if(t.dataset.auto==='r'&&S.db&&S.canWrite!==false)scheduleSave();
+});
+$app.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.task)toggleTask(t.dataset.task,t.checked);
+  else if(t.id==='fileIn'){uploadFor(t.files&&t.files[0],'report',function(x){return saveReport(false,x);});t.value='';}
+  else if(t.dataset&&t.dataset.slotfile){var sid=t.dataset.slotfile;uploadFor(t.files&&t.files[0],'dl_'+sid,function(x){return saveSlot(sid,x);});t.value='';}
+});
+$app.addEventListener('focusout',function(){setTimeout(function(){if(S.pending&&!typing())render();},0);});
+window.addEventListener('hashchange',route);
+
+/* ---------- الاتصال بالبيانات ---------- */
+function mapSnap(key){return function(s){var m={};s.docs.forEach(function(d){m[d.id]=d.data();});S[key]=m;renderSafe();};}
+function watchFb(u){
+  if(fbSubs[u])return;
+  fbSubs[u]=S.db.collection('feedback/'+u+'/items').orderBy('createdAt','desc').onSnapshot(function(s){S.fb[u]=s.docs.map(function(d){var o=Object.assign({id:d.id},d.data());return o;});renderSafe();},function(){});
+}
+function subscribe(){
+  var db=S.db,slow=setTimeout(function(){if(!S.membersReady){S.dbState='slow';renderSafe();}},10000);
+  db.collection('members').onSnapshot(function(s){
+    clearTimeout(slow);var m={};s.docs.forEach(function(d){m[d.id]=d.data();});S.members=m;S.membersReady=true;S.dbState='ready';
+    if(S.owner)Object.keys(m).forEach(watchFb);
+    renderSafe();
+  },function(e){clearTimeout(slow);S.dbState='error';S.err=e;render();});
+  db.collection('roles').onSnapshot(mapSnap('claims'),function(){});
+  db.collection('deliverables').onSnapshot(mapSnap('deliv'),function(){});
+  db.doc('settings/config').onSnapshot(function(s){S.settings=s.exists?s.data():{};renderSafe();},function(){});
+  db.doc('reports/'+S.uid).onSnapshot(function(s){S.myReport=s.exists?s.data():null;renderSafe();},function(){});
+  watchFb(S.uid);
+  if(S.owner)db.collection('reports').onSnapshot(mapSnap('reports'),function(){});
+}
+function makeDb(fs){
+  function clean(d){return JSON.parse(JSON.stringify(d));}
+  function snapOf(x){return {id:x.id,exists:x.exists,data:function(){return x.data();}};}
+  function docRef(r){return {id:r.id,path:r.path,
+    get:function(){return r.get().then(snapOf);},
+    set:function(d){return r.set(clean(d));},
+    update:function(d){return r.set(clean(d),{merge:true});},
+    delete:function(){return r.delete();},
+    onSnapshot:function(n,e){return r.onSnapshot(function(x){n(snapOf(x));},e||function(){});}};}
+  function colRef(q,base){return {
+    doc:function(id){return docRef(id?base.doc(id):base.doc());},
+    add:function(d){return base.add(clean(d)).then(docRef);},
+    orderBy:function(f,dir){return colRef(q.orderBy(f,dir),base);},
+    onSnapshot:function(n,e){return q.onSnapshot(function(x){n({docs:x.docs.map(snapOf),size:x.size,empty:x.empty});},e||function(){});}};}
+  return {
+    doc:function(p){return docRef(fs.doc(p));},
+    collection:function(p){var c=fs.collection(p);return colRef(c,c);},
+    claim:function(roleId,uid){var ref=fs.doc('roles/'+roleId);
+      return fs.runTransaction(function(tx){return tx.get(ref).then(function(x){
+        if(x.exists&&x.data().uid&&x.data().uid!==uid)return false;
+        tx.set(ref,{uid:uid,at:Date.now()});return true;});});}
+  };
+}
+function startFirebase(){
+  var cfg=FIREBASE_CONFIG;
+  if(!window.firebase||!cfg||/PASTE/.test(cfg.apiKey||'')||/PUT_LEADER/.test(LEADER_EMAIL)){S.dbState='noconfig';S.ownerKnown=true;route();return;}
+  firebase.initializeApp(cfg);
+  var auth=firebase.auth(),fs=firebase.firestore();
+  window.__doLogin=function(){
+    var p=new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(p).catch(function(e){
+      if(e&&(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment'))auth.signInWithRedirect(p);
+      else flash('login','تعذّر تسجيل الدخول ('+code(e)+')','err');});
+  };
+  auth.onAuthStateChanged(function(u){
+    if(!u){S.dbState='signedout';S.ownerKnown=true;route();return;}
+    if(S.db)return;
+    S.uid=u.uid;S.gname=u.displayName||'';
+    S.owner=!!(u.email&&u.emailVerified&&u.email.toLowerCase()===LEADER_EMAIL.toLowerCase());
+    S.canWrite=true;S.ownerKnown=true;S.db=makeDb(fs);subscribe();route();
+  });
+}
+route();
+startFirebase();
+})();
+</script>
+
+</body></html>
